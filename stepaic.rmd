@@ -1,0 +1,350 @@
+---
+output: word_document
+---
+#Data Importing And Cleaning
+```{r echo=TRUE}
+HousePrice <- read.csv("G:/Ryerson-BigData/capstone/kc_house_data.csv")
+head(HousePrice)
+colnames(HousePrice)
+any(is.na(HousePrice$id))
+any(is.na(HousePrice$date))
+any(is.na(HousePrice$price))
+any(is.na(HousePrice$bedrooms))
+any(is.na(HousePrice$bathrooms))
+any(is.na(HousePrice$sqft_living))
+any(is.na(HousePrice$sqft_lot))
+any(is.na(HousePrice$floors))
+any(is.na(HousePrice$waterfront))
+any(is.na(HousePrice$view))
+any(is.na(HousePrice$condition))
+any(is.na(HousePrice$grade))
+any(is.na(HousePrice$sqft_above))
+any(is.na(HousePrice$sqft_basement))
+any(is.na(HousePrice$yr_built))
+any(is.na(HousePrice$yr_renovated))
+any(is.na(HousePrice$zipcode))
+any(is.na(HousePrice$lat))
+any(is.na(HousePrice$long))
+any(is.na(HousePrice$sqft_living15))
+any(is.na(HousePrice$sqft_lot15))
+```
+
+
+
+
+
+#BEDROOM ANALYSIS
+```{r echo=TRUE}
+hist(HousePrice$bedrooms,main = 'HousePrice',xlab = 'Bedrooms',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$bedrooms,main = 'HousePrice',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+
+#*******Initial correlation = 
+cor(HousePrice$bedrooms,HousePrice$price)
+
+
+
+#*******Removing the outliers
+#Since more than 7 bedrooms are very rare.Also it's the outlier for my model.
+#I  have removed  the outlier data.
+HousePrice<-subset(HousePrice,bedrooms>=1 & bedrooms<=7)
+
+#*******Once we removed the outliers
+#******Final Correlation =
+cor(HousePrice$bedrooms,HousePrice$price)
+
+hist(HousePrice$bedrooms,main = 'HousePrice',xlab = 'Bedrooms',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$bedrooms,main = 'HousePrice',xlab = 'Bedrooms',
+        col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+ 
+```
+
+#BATHROOM ANALYSIS
+```{r echo=TRUE}
+
+plot(HousePrice$price~HousePrice$bathrooms,main = 'HousePrice',xlab = 'Bathrooms',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+hist(HousePrice$bathrooms,main = 'HousePrice',xlab = 'Bathrooms',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$bathrooms,main = 'HousePrice',xlab = 'Bathroom',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#*******Initial correlation = 
+cor(HousePrice$bathrooms,HousePrice$price)
+
+
+#*******Removing the outliers
+#More than 4 bathrooms are very rare in this data.So I am removing it.
+HousePrice<-subset(HousePrice,bathrooms>=1 & bathrooms<=4)
+
+#*******Once we removed the outliers
+plot(HousePrice$price~HousePrice$bathrooms,main = 'HousePrice',xlab = 'Bathrooms',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+hist(HousePrice$bathrooms,main = 'HousePrice',xlab = 'Bathrooms',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$bathrooms,main = 'HousePrice',xlab = 'bathrooms',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#******Final Correlation =
+cor(HousePrice$bathrooms,HousePrice$price)
+```
+#SQFT LIVING ANALYSIS
+```{r echo=TRUE}
+
+hist(HousePrice$sqft_living,main = 'HousePrice',xlab = 'Sqft_living',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$sqft_living, xlab = 'Sqft_living',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue',main = 'HousePrice')
+#*******Initial correlation = 
+cor(HousePrice$sqft_living,HousePrice$price)
+#
+
+#*******Removing the outliers
+HousePrice<-subset(HousePrice,sqft_living >1000 & sqft_living<=4000)
+
+#*******Once we removed the outliers
+hist(HousePrice$sqft_living,main = 'HousePrice',xlab = 'Sqft_living',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$sqft_living, xlab = 'Sqft_living',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue',main = 'HousePrice')
+#******Final Correlation =
+cor(HousePrice$sqft_living,HousePrice$price)
+
+```
+
+##GRADE ANALYSIS
+```{r echo=TRUE}
+
+boxplot(HousePrice$grade,main = 'HousePrice',xlab = 'Grade',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+hist(HousePrice$grade,main = 'HousePrice',xlab = 'grade',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#*******Initial correlation = 
+cor(HousePrice$price,HousePrice$grade)
+
+
+
+#*******Removing the outliers
+
+#Most of the houses grades are between 6-10 
+HousePrice<-subset(HousePrice,grade >= 6 & grade<=10)
+
+#*******Once we removed the outliers
+
+boxplot(HousePrice$grade,main = 'HousePrice',xlab = 'Grade',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+hist(HousePrice$grade,main = 'HousePrice',xlab = 'grade',ylab = 'No of Houses'
+,col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#******Final Correlation = 
+cor(HousePrice$price,HousePrice$grade)
+
+
+```
+
+#SQFT_ABOVE ANALYSIS
+```{r echo=TRUE}
+
+boxplot(HousePrice$sqft_above,main = 'HousePrice',xlab = 'sqft_above',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+hist(HousePrice$sqft_above,main = 'HousePrice',xlab = 'sqft_above',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#*******Initial correlation =
+cor(HousePrice$price,HousePrice$sqft_above)
+
+#*******Removing the outliers
+HousePrice<-subset(HousePrice,sqft_above >=500 & sqft_above<=3500)
+
+#*******Once we removed the outliers
+
+boxplot(HousePrice$sqft_above,main = 'HousePrice',xlab = 'sqft_above',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+hist(HousePrice$sqft_above,main = 'HousePrice',xlab = 'sqft_above',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#******Final Correlation = 
+cor(HousePrice$price,HousePrice$sqft_above)
+
+```
+#YR_BUILT ANALYSIS
+
+```{r echo=TRUE}
+##YR_BUILT ANALYSIS
+hist(HousePrice$yr_built,main = 'HousePrice',xlab = 'yr_built',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$yr_built,main = 'HousePrice',xlab = 'yr_built',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#*******Initial correlation =
+cor(HousePrice$price,HousePrice$yr_built)
+
+
+#*******Removing the outliers
+#In our data some records are too old..I just removed that data from my model.
+#Because It doesn't make any sense to keep more than 100 years house in our model
+HousePrice<-subset(HousePrice,yr_built>=1950& yr_built<=2015)
+
+#*******Once we removed the outliers
+
+hist(HousePrice$yr_built,main = 'HousePrice',xlab = 'yr_built',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$yr_built,main = 'HousePrice',xlab = 'yr_built',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#******Final Correlation = 
+cor(HousePrice$price,HousePrice$yr_built)
+```
+
+
+#ZIPCODE ANALYSIS
+```{r echo=TRUE}
+
+plot(HousePrice$price~HousePrice$zipcode,main = 'HousePrice',xlab = 'zipcode',ylab = 'price',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#correlation = 
+cor(HousePrice$price,HousePrice$zipcode)
+```
+
+
+##CONDITION aNALYSIS
+
+```{r echo=TRUE}
+
+hist(HousePrice$condition,main = 'HousePrice',xlab = 'condition',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+
+#*******Removing the outliers
+HousePrice<-subset(HousePrice,condition>=3& condition<=5)
+
+#*******Once we removed the outliers
+# Most of the houses are of condition 3-5
+
+hist(HousePrice$condition,main = 'HousePrice',xlab = 'condition',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#*********correlation = 
+cor(HousePrice$price,HousePrice$condition)
+
+plot(HousePrice$price~HousePrice$condition)
+```
+
+
+##SQFT_BASEMENT ANALYSIS
+```{r echo=TRUE}
+#*******Initial correlation = 
+cor(HousePrice$price,HousePrice$sqft_basement)
+
+hist(HousePrice$sqft_basement,main = 'HousePrice',xlab = 'sqft_basment',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+
+#*******Removing the outliers
+HousePrice<-subset(HousePrice,sqft_basement >=0 & sqft_basement<=1500)
+
+#*******Once we removed the outliers
+#*************Final correlation = 
+cor(HousePrice$price,HousePrice$sqft_basement)
+
+
+hist(HousePrice$sqft_basement,main = 'HousePrice',xlab = 'sqft_basment',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+
+boxplot(HousePrice$sqft_basement,main = 'HousePrice',xlab = 'sqft_basment',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+```
+
+##LAT ANALYSIS
+```{r echo=TRUE}
+
+hist(HousePrice$lat, main = 'HousePrice',xlab = 'lat',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$lat,main = 'HousePrice',xlab = 'lat',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+
+#*********Initial Correlation =
+cor(HousePrice$price,HousePrice$lat)
+
+#*******Removing the outliers
+HousePrice<-subset(HousePrice,lat>=47.3)
+
+#*******Once we removed the outliers
+#************Final Correlation = 
+cor(HousePrice$price,HousePrice$lat)
+hist(HousePrice$lat, main = 'HousePrice',xlab = 'lat',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$lat,main = 'HousePrice',xlab = 'lat',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+```
+
+## LONG ANALYSIS
+```{r echo=TRUE}
+hist(HousePrice$long,main = 'HousePrice',xlab = 'long',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#*********Initial Correlation =
+cor(HousePrice$price,HousePrice$long)
+
+
+#*******Removing the outliers
+HousePrice<-subset(HousePrice,long>=-122.4 & long < -121.8)
+
+#*******Once we removed the outliers
+#************Final Correlation = 
+cor(HousePrice$price,HousePrice$long)
+hist(HousePrice$long,main = 'HousePrice',xlab = 'long',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+```
+
+
+## SQFT_LOT ANALYSIS
+```{r echo=TRUE}
+
+hist(HousePrice$sqft_lot,main = 'HousePrice',xlab = 'sqft_lot',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$sqft_lot,main = 'HousePrice',xlab = 'sqft_lot', col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#*********Initial Correlation =
+cor(HousePrice$price,HousePrice$sqft_lot)
+#*******Removing the outliers
+HousePrice<-subset(HousePrice,sqft_lot>=0 & sqft_lot<=25000)
+
+#*******Once we removed the outliers
+#************Final Correlation = 
+cor(HousePrice$price,HousePrice$sqft_lot)
+hist(HousePrice$sqft_lot,main = 'HousePrice',xlab = 'sqft_lot',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$sqft_lot,main = 'HousePrice',xlab = 'sqft_lot', col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+```
+
+## FLOOR ANALYSIS
+```{r echo=TRUE}
+
+hist(HousePrice$floors,main = 'HousePrice',xlab = 'floors',ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+boxplot(HousePrice$floors,main = 'HousePrice',xlab = 'floors' ,col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#*********Initial Correlation =
+cor(HousePrice$price,HousePrice$floors)
+```
+
+## SQFT_LIVING15 ANALYSIS
+```{r echo=TRUE}
+hist(HousePrice$sqft_living15, main = 'HousePrice',xlab = 'sqft_living15', ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue', col = 'Blue')
+boxplot(HousePrice$sqft_living15,main = 'HousePrice',xlab = 'sqft_living15', col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+
+#************Final Correlation = 
+cor(HousePrice$sqft_living15,HousePrice$price )
+```
+
+##SQFT_LOT15 ANALYSIS
+```{r echo=TRUE}
+hist(HousePrice$sqft_lot15, main = 'HousePrice',xlab = 'sqft_lot15', ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue', col = 'Blue')
+boxplot(HousePrice$sqft_lot15,main = 'HousePrice',xlab = 'sqft_lot15',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#************initial Correlation = 
+cor(HousePrice$sqft_lot15,HousePrice$price)
+#*******Removing the outliers
+HousePrice<-subset(HousePrice,sqft_lot15>=0 & sqft_lot<=20000)
+
+#*******Once we removed the outliers
+hist(HousePrice$sqft_lot15, main = 'HousePrice',xlab = 'sqft_lot15', ylab = 'No of Houses',col.main='Blue',col.axis='Blue',col.lab = 'Blue', col = 'Blue')
+boxplot(HousePrice$sqft_lot15,main = 'HousePrice',xlab = 'sqft_lot15',col.main='Blue',col.axis='Blue',col.lab = 'Blue',col = 'Blue')
+#************Final Correlation = 
+cor(HousePrice$sqft_lot15,HousePrice$price)
+```
+
+##Correlation among all the variables
+```{r echo=TRUE}
+#*******Only sqft_living & sqft_above,sqft_living & grade,sqft_living & bathrooms have good correlation between them
+HousePrice$date <- NULL
+cor(HousePrice)
+
+```
+# Linear Model using stepAIC method
+```{r echo=TRUE}
+lm <- lm(formula = price~.,data=HousePrice)
+install.packages("MASS", repos = "http://cran.us.r-project.org")
+library(MASS)
+stepb<-stepAIC(lm,direction="backward",trace=TRUE)
+summary(stepb)
+```
+```{r echo=TRUE}
+#since floor is having very less contribution to price.we are not including floor in our model.
+str(HousePrice)
+sapply(HousePrice, is.numeric)
+HousePrices <- HousePrice[ , sapply(HousePrice, is.numeric)]
+cor(HousePrices)
+```
+```{r echo=TRUE}
+#since no any variable is highly correlated with each other
+HousePrice$floors<-NULL
+HousePrice$date<-NULL
+str(HousePrice)
+
+colnames(HousePrice)
+set.seed(1)
+rn_train <- sample(nrow(HousePrice),floor(nrow(HousePrice)*0.7))
+train <- HousePrice[rn_train,colnames(HousePrice)]
+test <- HousePrice[-rn_train,colnames(HousePrice)]
+lm.price<-lm(price~.,data = train)
+prediction <- predict(lm.price,newdata = test)
+training_data_prediction = fitted(lm.price)
+training_rmse = sqrt(sum((training_data_prediction-train$price)^2)/nrow(train))
+training_rmse
+testing_rmse = sqrt(sum((prediction - test$price)^2)/nrow(test))
+testing_rmse
+lm.price
+
+```
+
